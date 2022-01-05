@@ -1,0 +1,10 @@
+<form class="message-box" (ngSubmit)="onSubmit()">
+    <textarea 
+        type="text" 
+        class="message-input" 
+        placeholder="Type message..."
+        [(ngModel)]="message"
+        name="message"
+    ></textarea>
+    <button type="submit" class="message-submit">Send</button>
+</form>

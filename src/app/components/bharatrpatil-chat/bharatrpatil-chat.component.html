@@ -1,0 +1,49 @@
+<div class="fabs">
+    <div class="chat" [ngClass]="{'is-visible': chatdisplay}">
+        <div class="chat_header">
+            <div class="chat_option">
+                <div class="header_img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7sVRIsqZhjKwxEBVuQJk_XJznqdjfnSEzFHA_AsIlqejXuHJe6cqVGcWABzGKDimMI00&usqp=CAU" />
+                </div>
+                <span id="chat_head">ConsejerosBot</span> <br> <span
+                    class="online">(Online)</span>
+                <span id="chat_fullscreen_loader" class="chat_fullscreen_loader"><i
+                        class="fullscreen zmdi zmdi-window-maximize"></i></span>
+
+            </div>
+
+        </div>
+        <div #content id="chat_converse" class="chat_conversion chat_converse">
+            <ng-container *ngFor="let message of messages">
+                <span class="chat_msg_item chat_msg_item_user" *ngIf="message.from === 'me'" [innerHTML]="message.text"></span>
+                <span class="chat_msg_item chat_msg_item_admin" *ngIf="message.from === 'bot'">
+                    <div class="chat_avatar">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7sVRIsqZhjKwxEBVuQJk_XJznqdjfnSEzFHA_AsIlqejXuHJe6cqVGcWABzGKDimMI00&usqp=CAU" />
+                    </div><span [innerHTML]="message.text"></span>
+                </span>
+            </ng-container>
+            <span class="chat_msg_item chat_msg_item_admin" *ngIf="loading">
+                <div class="chat_avatar">
+                    <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7sVRIsqZhjKwxEBVuQJk_XJznqdjfnSEzFHA_AsIlqejXuHJe6cqVGcWABzGKDimMI00&usqp=CAU" />
+                </div>
+                <div class="typing">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </span>
+        </div>
+        <!-- <span *ngIf="currentMessage?.type === 'format'" class="format">{{format}}</span> -->
+        <form class="fab_field" (ngSubmit)="onSubmit()">
+            <input placeholder="Send a message" autocomplete="off"
+            class="chat_field chat_message" [(ngModel)]="message" name="message">
+            <button id="fab_send" class="fab"><i class="zmdi zmdi-mail-send"></i></button>
+        </form>
+    </div>
+    <a id="prime" class="fab" (click)="chatDisplayClick()"><i class="prime zmdi" [ngClass]="chatdisplay ? 'zmdi-close is-active is-visible' : 'zmdi zmdi-comment-outline'"></i></a>
+</div>
+<script src='http://code.jquery.com/jquery-1.11.3.min.js'></script>
+
+<script src="js/index.js"></script>
