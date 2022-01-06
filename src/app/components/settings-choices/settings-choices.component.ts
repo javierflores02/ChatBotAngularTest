@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BhPolizaServiceService } from 'src/app/services/bh-poliza-service.service';
-import { Choice, Message } from '../bharatrpatil-chat/bharatrpatil-chat.component';
+import { Choice } from './../../Choice';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import Swal from 'sweetalert2'
+import { Message } from './../../Message';
 
 @Component({
   selector: 'app-settings-choices',
@@ -11,6 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class SettingsChoicesComponent implements OnInit {
 
   choices: Choice[] = [];
+  dialogs: Message[] = [];
   ChoiceForm: FormGroup;
   submitted = false;
   EventValueChoice: any = "Guardar";
@@ -35,6 +38,9 @@ export class SettingsChoicesComponent implements OnInit {
     this.polizaService.getChoices("https://localhost:7247/Choice").subscribe(value => {
       this.choices = value;
     })
+    this.polizaService.getQuestions("https://localhost:7247/Dialog").subscribe(value => {
+      this.dialogs = value;
+    })
   }
 
   editDataChoice(Data) {
@@ -47,8 +53,25 @@ export class SettingsChoicesComponent implements OnInit {
   }
 
   deleteDataChoice(id) {
-    this.polizaService.deleteChoice(id).subscribe(() => {
-      this.getDataChoice();
+    Swal.fire({
+      title: '¿Estás seguro que deseas eliminar este elemento?',
+      text: "No lo podrás recuperar después.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar.'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.polizaService.deleteChoice(id).subscribe(() => {
+          this.getDataChoice();
+          Swal.fire(
+            'Eliminado!',
+            'Se eliminó el elemento correctamente',
+            'success'
+          )
+        })
+      }
     })
   }
 

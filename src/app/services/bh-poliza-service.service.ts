@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Message, Choice } from '../components/bharatrpatil-chat/bharatrpatil-chat.component';
+import { Choice } from './../Choice';
+import { Message } from './../Message';
 
 export interface Poliza {
   id: number;

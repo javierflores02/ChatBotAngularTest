@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PolizasService } from 'src/app/services/polizas.service';
-import { Question } from 'src/app/Question';
+import { Question } from 'src/app/QuestionTest';
 import { UiService } from 'src/app/ui.service';
-import { Message } from '../../Message';
 
 @Component({
   selector: 'app-chat-form',

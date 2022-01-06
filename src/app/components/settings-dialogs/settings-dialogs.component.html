@@ -1,4 +1,4 @@
-<div class="row p-5">
+<div class="row px-5">
     <div class="col-lg-4 col-12">
         <form [formGroup]="DialogForm" (ngSubmit)="this[EventValueDialog]()">
         
@@ -10,7 +10,7 @@
                     <tr>
                         <td>Texto</td>
                         <td>
-                            <input type="text" formControlName="text">
+                            <input type="text" formControlName="text" class="form-control">
                             <div *ngIf="submitted && DialogForm.controls['text'].errors" class="text-danger">
                                 <div *ngIf="DialogForm.controls['text'].errors['required']">Texto is required</div>
                             </div>
@@ -19,7 +19,12 @@
                     <tr>
                         <td>Tipo</td>
                         <td>
-                            <input type="text" formControlName="type">
+                            <select formControlName="type" class="form-control" (change)="onChangeType($event)">
+                                <option value="">--------</option>
+                                <option value="message">Mensaje</option>
+                                <option value="input">Input</option>
+                                <option value="choices">Opciones</option>
+                            </select>
                             <div *ngIf="submitted && DialogForm.controls['type'].errors" class="text-danger">
                                 <div *ngIf="DialogForm.controls['type'].errors['required']">Tipo is required</div>
                             </div>
@@ -28,31 +33,30 @@
                     <tr>
                         <td>Pregunta previa</td>
                         <td>
-                            <input type="text" formControlName="previousQuestion">
-                            <div *ngIf="submitted && DialogForm.controls['previousQuestion'].errors" class="text-danger">
-                                <div *ngIf="DialogForm.controls['previousQuestion'].errors['required']">Ant. pregunta is required
-                                </div>
-                            </div>
+                            <select formControlName="previousQuestion" class="form-control">
+                                <option value="">--------</option>
+                                <option *ngFor="let d of dialogs" value="{{d.id}}">ID: {{d.id}}, {{d.text}}</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
                         <td>URL</td>
                         <td>
-                            <input type="text" formControlName="url">
+                            <input type="text" formControlName="url" class="form-control">
                             <div *ngIf="submitted && DialogForm.controls['url'].errors" class="text-danger">
                                 <div *ngIf="DialogForm.controls['url'].errors['required']">URL is required</div>
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>Formato</td>
                         <td>
-                            <input type="text" formControlName="format">
+                            <input type="text" formControlName="format" class="form-control">
                             <div *ngIf="submitted && DialogForm.controls['format'].errors" class="text-danger">
                                 <div *ngIf="DialogForm.controls['format'].errors['required']">Formato is required</div>
                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr>
         
                         <td colspan="2">
@@ -74,9 +78,9 @@
                     <td>Texto</td>
                     <td>Tipo</td>
                     <td>Desencadenante</td>
-                    <td>Url</td>
-                    <td>Formato</td>
-                    <td colspan="2">Opciones</td>
+                    <!-- <td>Url</td> -->
+                    <!-- <td>Formato</td> -->
+                    <td>Opciones</td>
                 </tr>
         
                 <tr *ngFor="let d of dialogs">
@@ -84,10 +88,12 @@
                     <td>{{d.text}}</td>
                     <td>{{d.type}}</td>
                     <td>{{d.previousQuestion}}</td>
-                    <td>{{d.url}}</td>
-                    <td>{{d.format}}</td>
-                    <td><a (click)="editDataDialog(d)" class="btn btn-warning">Edit</a></td>
-                    <td><a (click)="deleteDataDialog(d.id)" class="btn btn-danger">Delete</a></td>
+                    <!-- <td>{{d.url}}</td> -->
+                    <!-- <td>{{d.format}}</td> -->
+                    <td>
+                        <a (click)="editDataDialog(d)" class="btn btn-warning">Editar</a>
+                        <a (click)="deleteDataDialog(d.id)" class="ml-1 btn btn-danger">Eliminar</a>
+                    </td>
                 </tr>
             </table>
         </div>

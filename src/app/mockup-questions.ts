@@ -1,4 +1,4 @@
-import { Question, Choice } from "./Question";
+import { Question, Choice } from "./QuestionTest";
 
 // export const main_question: Question = {
 //     id: 1,

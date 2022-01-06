@@ -1,4 +1,5 @@
-import { Choice, Message } from "./bharatrpatil-chat.component";
+import { Choice } from './../../Choice';
+import { Message } from './../../Message';
 
 
 export const getChoices = (idQuestion: number): Choice[] => {
@@ -13,8 +14,11 @@ export const getQuestion = (idQuestion: number, mockMessages: Message[]): Messag
     return mockMessages.find((question) => question.id === idQuestion);
 }
 
-export const getChoicesStr = (idQuestion: number, first: boolean = false, mockChoice: Choice[]): string => {
-    let choice_str = first ? "" : `<p class="bot_rsp_choice">Ingrese <b class="bot_rsp_choice">0</b> para volver a la prregunta anterior</p>`
+export const getChoicesStr = (idQuestion: number, first: boolean = false, mockChoice: Choice[], mockMessages: Message[]): string => {
+    let question = getQuestion(idQuestion, mockMessages)
+    let choice_str = `<p class="bot_rsp_choice">${question.text}</p>`
+    choice_str += first ? "" : `<p class="bot_rsp_choice">Ingrese <b class="bot_rsp_choice">0</b> para volver a la prregunta anterior</p>`
+    
     mockChoice.map((choice) => {
         if (choice.question === idQuestion){
             choice_str += `<p class="bot_rsp_choice">Ingrese <b class="bot_rsp_choice">${choice.option}</b> para ${choice.text}</p>`

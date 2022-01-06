@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Choice, Question } from 'src/app/Question';
+import { Choice, Question } from 'src/app/QuestionTest';
 import { UiService } from 'src/app/ui.service';
 import { mainQuestion, choices, getChoices } from 'src/app/mockup-questions';
 

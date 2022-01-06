@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BhPolizaServiceService } from 'src/app/services/bh-poliza-service.service';
-import { Choice, Message } from '../bharatrpatil-chat/bharatrpatil-chat.component';
+import { Choice } from './../../Choice';
+import { Message } from './../../Message';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({

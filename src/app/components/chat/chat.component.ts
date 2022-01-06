@@ -1,31 +1,17 @@
+// bharatrpatil model
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { getChoice, getChoicesStr, getQuestion } from './mock-messages';
-import { BhPolizaServiceService } from './../../services/bh-poliza-service.service';
-
-export interface Message{
-  id: number;
-  text: string;
-  from: string;
-  type: string;
-  previousQuestion: number;
-  url?: string;
-  format?: string;
-}
-
-export interface Choice {
-  id: number;
-  text: string;
-  question: number;
-  nextQuestion: number;
-  option: number;
-}
+import { BhPolizaServiceService } from '../../services/bh-poliza-service.service';
+import { Choice } from './../../Choice';
+import { Message } from './../../Message';
 
 @Component({
-  selector: 'app-bharatrpatil-chat',
-  templateUrl: './bharatrpatil-chat.component.html',
-  styleUrls: ['./bharatrpatil-chat.component.css']
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
 })
-export class BharatrpatilChatComponent implements OnInit {
+export class ChatComponent implements OnInit {
 
   @ViewChild('content') content: ElementRef;
   chatdisplay: boolean = true;
@@ -71,6 +57,7 @@ export class BharatrpatilChatComponent implements OnInit {
   }
 
   onSubmit(){
+    // Se agrega el dialogo a el arreglo de mensajes
     this.messages.push({
       id:  1,
       text:  this.message,
@@ -82,6 +69,7 @@ export class BharatrpatilChatComponent implements OnInit {
     setTimeout(() => {
       this.scrollToBottom();
     }, 0);
+    // Se vacía el contenido del input del chat
     this.message = "";
   }
 
@@ -95,7 +83,7 @@ export class BharatrpatilChatComponent implements OnInit {
     if(!lastQuestion) {
       let first = this.mockMessages[0]
       let second = this.mockMessages[1]
-      second.text = getChoicesStr(second.id, true, this.mockChoices)
+      second.text = getChoicesStr(second.id, true, this.mockChoices, this.mockMessages)
       this.messages.push(first, second)
     }else{
       const choice = getChoice(lastQuestion.id, parseInt(mensaje), this.mockChoices);
@@ -104,8 +92,8 @@ export class BharatrpatilChatComponent implements OnInit {
         let question = getQuestion(choice.nextQuestion, this.mockMessages);
         console.log(question);
         if (question.type === "choices"){
-          question.text = getChoicesStr(question.id, false, this.mockChoices)
-        } 
+          question.text = getChoicesStr(question.id, false, this.mockChoices, this.mockMessages)
+        }  
         this.messages.push(question)
       }else{
         if(lastQuestion.type === "input"){
@@ -127,12 +115,12 @@ export class BharatrpatilChatComponent implements OnInit {
             }, 0);
           });
         } else if (lastQuestion.type === "format"){
-          this.message = "holaaaa";
+          // format
         }else{
           if (mensaje === "0" && lastQuestion.previousQuestion !== 1) {
             let prevQuestion = getQuestion(lastQuestion.previousQuestion, this.mockMessages)
             if (prevQuestion.type === "choices") {
-              prevQuestion.text = getChoicesStr(prevQuestion.id, lastQuestion.previousQuestion !== 1 , this.mockChoices)
+              prevQuestion.text = getChoicesStr(prevQuestion.id, lastQuestion.previousQuestion !== 1 , this.mockChoices, this.mockMessages)
             }
             this.messages.push(prevQuestion);
           } else {

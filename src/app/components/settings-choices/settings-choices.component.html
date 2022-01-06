@@ -2,7 +2,7 @@
     <div class="col-lg-4 col-12">
         <form [formGroup]="ChoiceForm" (ngSubmit)="this[EventValueChoice]()">
         
-            <div class="row p-5">
+            <div class="row px-5">
 
                 <h3>Opciones - Mantenimiento</h3>
         
@@ -10,7 +10,7 @@
                     <tr>
                         <td>Texto</td>
                         <td>
-                            <input type="text" formControlName="text">
+                            <input type="text" formControlName="text" class="form-control">
                             <div *ngIf="submitted && ChoiceForm.controls['text'].errors" class="text-danger">
                                 <div *ngIf="ChoiceForm.controls['text'].errors['required']">Texto es requerido</div>
                             </div>
@@ -19,27 +19,25 @@
                     <tr>
                         <td>Desencadenante</td>
                         <td>
-                            <input type="text" formControlName="question">
-                            <div *ngIf="submitted && ChoiceForm.controls['question'].errors" class="text-danger">
-                                <div *ngIf="ChoiceForm.controls['question'].errors['required']">Desencadenante es requerido
-                                </div>
-                            </div>
+                            <select formControlName="question" class="form-control">
+                                <option value="">--------</option>
+                                <option *ngFor="let d of dialogs" value="{{d.id}}">ID: {{d.id}}, {{d.text}}</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
                         <td>Sig. pregunta</td>
                         <td>
-                            <input type="text" formControlName="nextQuestion">
-                            <div *ngIf="submitted && ChoiceForm.controls['nextQuestion'].errors" class="text-danger">
-                                <div *ngIf="ChoiceForm.controls['nextQuestion'].errors['required']">Siguiente pregunta es requerido
-                                </div>
-                            </div>
+                            <select formControlName="nextQuestion" class="form-control">
+                                <option value="">--------</option>
+                                <option *ngFor="let d of dialogs" value="{{d.id}}">ID: {{d.id}}, {{d.text}}</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
                         <td>Número</td>
                         <td>
-                            <input type="text" formControlName="option">
+                            <input type="text" formControlName="option" class="form-control">
                             <div *ngIf="submitted && ChoiceForm.controls['option'].errors" class="text-danger">
                                 <div *ngIf="ChoiceForm.controls['option'].errors['required']">Número es requerido
                                 </div>
@@ -49,6 +47,7 @@
                     <tr>
                         <td colspan="2">
                             <button type="submit" class="btn btn-primary">{{EventValueChoice}}</button>
+                            <button type="button" class="btn btn-danger ml-1" *ngIf="EventValueChoice === 'Actualizar'" (click)="resetFormChoice()">Cancelar</button>
                         </td>
                     </tr>
         
@@ -57,7 +56,7 @@
         </form>
     </div>
     <div class="col-lg-8 col-12">
-        <div class="row p-5">
+        <div class="row px-5">
             <table class="table table-striped">
                 <tr>
                     <td>Id</td>
@@ -65,17 +64,19 @@
                     <td>Desencadenante</td>
                     <td>Sig. pregunta</td>
                     <td>Número</td>
-                    <td colspan="2">Opciones</td>
+                    <td>Opciones</td>
                 </tr>
         
                 <tr *ngFor="let c of choices">
                     <td>{{c.id}}</td>
                     <td>{{c.text}}</td>
-                    <td>{{c.question}}</td>
+                    <td >{{c.question}}</td>
                     <td>{{c.nextQuestion}}</td>
                     <td>{{c.option}}</td>
-                    <td><a (click)="editDataChoice(c)" class="btn btn-warning">Edit</a></td>
-                    <td><a (click)="deleteDataChoice(c.id)" class="btn btn-danger">Delete</a></td>
+                    <td>
+                        <a (click)="editDataChoice(c)" class="btn btn-warning">Editar</a>
+                        <a (click)="deleteDataChoice(c.id)" class="ml-1 btn btn-danger">Eliminar</a>
+                    </td>
                 </tr>
             </table>
         </div>
